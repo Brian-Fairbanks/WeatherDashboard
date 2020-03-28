@@ -4,7 +4,9 @@
 // sidenav elements
 var citySearchForm = $("#citySearchForm");
 var cityInput = $("#cityInput");
-var searchedCardGroup = $("#searchedCardGroup");
+var searchedCitysGroup = $("#cityHistoryBtns");
+
+var cityHist;
 
 //main content elements
 var curWeatherCard = $("#curWeatherCard");
@@ -17,12 +19,40 @@ var curWeatherQry = "https://api.openweathermap.org/data/2.5/weather?appid="+aut
 var uvQry = "https://api.openweathermap.org/data/2.5/uvi?appid="+authKey;
 
 
+
 /*############################################
 #    Functions
 ##############################################*/
+
+function printButtons(){
+    //clear previous buttons
+    searchedCitysGroup.empty();
+
+    for(city of cityHist){
+        searchedCitysGroup.prepend( $("<button/>",{class:"btn btn-secondary btn-white city-btn", 'data-city':city, text:city}) )
+    }
+    // print is called whenever buttons change, so it makes sense to add the save function here too
+    saveHist();
+
+}
+
+function saveHist(){
+    localStorage.setItem('history',JSON.stringify(cityHist));
+}
+
+
+function loadHist(){
+    cityHist = JSON.parse(localStorage.getItem('history'));
+    if(cityHist === null){
+        cityHist = [];
+    }
+}
+
+
 function kelvToF(temp){
     return ((temp - 273.15)*(9/5) + 32).toFixed(2);
 }
+
 
 function getIcon(weather){  
     weatherIcon = $("<i/>");
@@ -32,6 +62,8 @@ function getIcon(weather){
     }
     return weatherIcon;
 }
+
+
 
 
 function getUV(response){
@@ -57,9 +89,19 @@ function getUV(response){
 
 
 function printWeatherForCity(cityName){
-    $.ajax({url:curWeatherQry+cityName, method:"GET"})
+    $.ajax({
+        url:curWeatherQry+cityName,
+        method:"GET",
+        error:function (xhr, ajaxOptions, thrownError){
+            if(xhr.status==404) {
+                curWeatherCard.empty();
+                curWeatherCard.append($("<h4/>",{text: "I'm sorry, but '"+cityHist.pop()+"' could not be found by Open Weather API.  I took the liberty of removing this from your history.  Please try another city!" }));
+                printButtons();
+            }
+        }
+    })
     .then(function(response){
-        console.log(response);
+        //console.log(response);
         var time = moment();
 
         //clear previous information
@@ -78,13 +120,62 @@ function printWeatherForCity(cityName){
                 $('<div/>',{id:"uvDiv",text:"UV Index: "})
             ])
         ])
+        //since the other AJAX call ran, we know that the city is valid.  run the other calls
+        printWeatherForecast(cityName)
         getUV(response);
-
     });
+}
+
+
+
+function printWeatherForecast(cityName){
+    $.ajax({
+        url:dayforcastQry+cityName,
+        method:"GET",
+    })
+    .then(function(response){
+        console.log(response);
+    });
+}
+
+function cityAdded(event){
+    event.preventDefault();
+    // salt value passed
+    newCity = cityInput.val().toLowerCase().trim();
+
+    //add if not already in the list...
+    if(cityHist.indexOf(newCity) < 0){
+        cityHist.push(newCity)
+    }
+    //highlight previous if it already exists
+    else{
+        printWeatherForCity(newCity);
+        return;
+    }
+
+    //clear the input value again;
+    cityInput.val("");
+
+    //call function.  this will pop the element if it does not exist
+    printWeatherForCity(newCity);
+
+    //print all buttons
+    printButtons();
 }
 
 /*############################################
 #    Main
 ##############################################*/
 
-printWeatherForCity("Pflugerville");
+$(window).on("load", function(){
+    loadHist();
+    printButtons();
+});
+
+citySearchForm.on("submit", cityAdded);
+
+$(document).on("click",".city-btn", function(){
+    city = $(this).attr("data-city");
+    printWeatherForCity(city);
+})
+

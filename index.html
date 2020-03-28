@@ -30,9 +30,9 @@
                 <label for="cityInput" class="font-weight-bold">Search for a City:</label>
                 <div class="input-group mb-3">
                     <!-- <label for="cityInput" class="font-weight-bold">Search for a City:</label> -->
-                    <input type="text" id="cityInput" class="form-control" placeholder="Pflugerville" aria-label="cityInput" aria-describedby="city-input">
+                    <input type="text" id="cityInput" class="form-control" aria-label="cityInput" aria-describedby="city-input">
                     <div class="input-group-append">
-                        <button class="btn btn-primary text-light" type="button">
+                        <button class="btn btn-primary text-light" type="submit">
                             <!-- font awesome search icon -->
                             <i class="fas fa-search-plus"></i>
                         </button>
@@ -40,10 +40,10 @@
                 </div>
             </form>
 
-            <div class="btn-group-vertical bg-white w-100 text-left">
-                <button class="btn btn-secondary btn-white">test</button>
+            <div id="cityHistoryBtns" class="btn-group-vertical bg-white w-100 text-left">
+                <!-- <button class="btn btn-secondary btn-white">test</button>
                 <button class="btn btn-secondary btn-white">test2</button>
-                <button class="btn btn-secondary btn-white">yolo</button>
+                <button class="btn btn-secondary btn-white">yolo</button> -->
             </div>
         </section>
 
@@ -52,7 +52,7 @@
         <section class="col pt-3">
             <!-- current weather card-->
             <div id= "curWeatherCard" class="card mb-3">
-                <h1>I'm sorry, something went wrong!</h1>
+                <h1 class="p-3">Please start by searching for a city</h1>
             </div>
             <div id="dayForcast" class="container-fluid">
                 <h4>5-day Forecast:</h4>
