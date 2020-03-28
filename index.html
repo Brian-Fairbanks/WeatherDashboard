@@ -4,9 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Dashboard</title>
+    <!-- bootstrap, custom-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="./styles.css">
+
+    <!-- jQuery, font awesome -->
+    <script src="https://kit.fontawesome.com/9aa3b96097.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/9aa3b96097.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
+    <!-- sticky header . likely wont need to be used as a sticky element -->
+    <header class="header bg-dark text-light sticky-top text-center m-0 p-3">
+        <h1>Weather Dashboard</h1>
+    </header>
+
+    <!-- main content of body, a row of 2 columns-->
+    <main class="container-fluid row m-0 p-0">
+        <!-- search history on left side -->
+        <section class="sidebar col-sm-5 col-md-4 col-lg-3 bg-light">
+
+            <!--  Input for citys to search-->
+            <form id="citySearchForm">
+                <label for="cityInput" class="font-weight-bold">Search for a City:</label>
+                <div class="input-group mb-3">
+                    <!-- <label for="cityInput" class="font-weight-bold">Search for a City:</label> -->
+                    <input type="text" id="cityInput" class="form-control" placeholder="Pflugerville" aria-label="cityInput" aria-describedby="city-input">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary text-light" type="button">
+                            <!-- font awesome search icon -->
+                            <i class="fas fa-search-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="btn-group-vertical bg-white w-100 text-left">
+                <!-- <button class="btn btn-secondary">test</button>
+                <button class="btn btn-secondary">test2</button>
+                <button class="btn btn-secondary">yolo</button> -->
+            </div>
+        </section>
+
+
+        <!-- weather content on right side -->
+        <section class="col pt-3">
+            <!-- current weather card-->
+            <div id= "curWeatherCard" class="card">
+                <h1>I'm sorry, something went wrong!</h1>
+            </div>
+            <div id="dayForcast" class="container-fluid">
+                <h4>5-day Forcast:</h4>
+
+            </div>
+        </section>
+    </main>
     
     <script type="text/javascript" src="./logic.js"></script>
 </body>
