@@ -134,9 +134,28 @@ function printWeatherForecast(cityName){
         method:"GET",
     })
     .then(function(response){
-        console.log(response);
+        dayForcastDiv.empty()
+        //loop through all 3 hour increments returned, looking for the ones at noon
+        for (chunk of response.list){
+            if(chunk.dt_txt.includes("12:00:00")){
+                //console.log(chunk);
+                //create card
+                dayForcastDiv.append( 
+                    $("<div/>",{class:"card bg-primary text-center text-white border border-white p-2"}).append([
+                        $("<div/>",{class:"font-weight-bold", text:moment.unix(chunk.dt).format("MM/DD/YYYY")}),
+                        $('<h3/>',{text:response.name}).append(
+                            getIcon(chunk.weather)
+                        ),
+                        $('<div/>',{text:"Temp: "+kelvToF(chunk.main.temp)+"°F"}),
+                        $('<div/>',{text:"Humidity: "+chunk.main.humidity+"%"})
+                    ])
+                )
+
+            }
+        }
     });
 }
+
 
 function cityAdded(event){
     event.preventDefault();
