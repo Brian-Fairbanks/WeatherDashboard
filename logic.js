@@ -141,7 +141,7 @@ function printWeatherForecast(cityName){
                 //console.log(chunk);
                 //create card
                 dayForcastDiv.append( 
-                    $("<div/>",{class:"card bg-primary text-center text-white border border-white p-2"}).append([
+                    $("<div/>",{class:"card bg-primary text-center text-white border border-white p-2 col-xs-12 col-sm-6 col-md-4 col-lg"}).append([
                         $("<div/>",{class:"font-weight-bold", text:moment.unix(chunk.dt).format("MM/DD/YYYY")}),
                         $('<h3/>',{text:response.name}).append(
                             getIcon(chunk.weather)
