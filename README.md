@@ -17,7 +17,7 @@ I WANT to see the weather outlook for multiple cities
 SO THAT I can plan a trip accordingly
 ```
 
-## Acceptance Criteria
+## Functionality
 
 ```
 GIVEN a weather dashboard with form inputs
@@ -31,6 +31,7 @@ THEN I am presented with the city name, the date, an icon representation of weat
 
 WHEN I view the UV index
 THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
+color scale and numbers pulled from [epa.gov](https://www.epa.gov/sunsafety/uv-index-scale-0)
 
 WHEN I view future weather conditions for that city
 THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity
@@ -38,7 +39,3 @@ THEN I am presented with a 5-day forecast that displays the date, an icon repres
 WHEN I click on a city in the search history
 THEN I am again presented with current and future conditions for that city
 ```
-
-The following image demonstrates the application functionality:
-
-![weather dashboard demo](./Assets/06-server-side-apis-homework-demo.png)
