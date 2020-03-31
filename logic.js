@@ -89,13 +89,14 @@ function getUV(response){
 
 
 function printWeatherForCity(cityName){
-    $.ajax({
+   $.ajax({ 
         url:curWeatherQry+cityName,
         method:"GET",
         error:function (xhr, ajaxOptions, thrownError){
             if(xhr.status==404) {
                 curWeatherCard.empty();
                 curWeatherCard.append($("<h4/>",{text: "I'm sorry, but '"+cityHist.pop()+"' could not be found by Open Weather API.  I took the liberty of removing this from your history.  Please try another city!" }));
+                dayForcastDiv.empty();
                 printButtons();
             }
         }
@@ -161,6 +162,7 @@ function cityAdded(event){
     event.preventDefault();
     // salt value passed
     newCity = cityInput.val().toLowerCase().trim();
+    if (newCity ==""){return;}
 
     //add if not already in the list...
     if(cityHist.indexOf(newCity) < 0){
